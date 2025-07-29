@@ -1442,6 +1442,15 @@ int main(void) {
         case 9:
             removeNuts(list);
             break;
+        case 10:
+            showStatistics(list);
+            break;
+        case 11:
+            advancedSearchScrews(list);
+            break;
+        case 12:
+            advancedSearchNuts(list);
+            break;
         case 0:
             printf("Exiting...\n");
             return 0;
