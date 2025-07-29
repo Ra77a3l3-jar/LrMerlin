@@ -530,6 +530,100 @@ void load_from_file(Screw_nuts *list, const char *filename) {
     printf("✅ Screws and nuts loaded successfully!\n");
 }
 
+void showStatistics(Screw_nuts *list) {
+    printf("\n=== INVENTORY STATISTICS ===\n");
+    
+    // Basic counts
+    printf("\n--- Basic Statistics ---\n");
+    printf("Total Screws: %d\n", list->screw_count);
+    printf("Total Nuts: %d\n", list->nut_count);
+    printf("Total Items: %d\n", list->screw_count + list->nut_count);
+    
+    // Screw statistics
+    if (list->screw_count > 0) {
+        int total_screw_quantity = 0;
+        int min_screw_quantity = list->screws[0].quantity;
+        int max_screw_quantity = list->screws[0].quantity;
+        int total_length = 0;
+        int total_diameter = 0;
+        
+        for (int i = 0; i < list->screw_count; i++) {
+            total_screw_quantity += list->screws[i].quantity;
+            total_length += list->screws[i].lenght;
+            total_diameter += list->screws[i].diameter;
+            
+            if (list->screws[i].quantity < min_screw_quantity)
+                min_screw_quantity = list->screws[i].quantity;
+            if (list->screws[i].quantity > max_screw_quantity)
+                max_screw_quantity = list->screws[i].quantity;
+        }
+        
+        printf("\n--- Screw Statistics ---\n");
+        printf("Total Screw Quantity: %d pieces\n", total_screw_quantity);
+        printf("Average Quantity per Type: %.2f pieces\n", (float)total_screw_quantity / list->screw_count);
+        printf("Min Quantity: %d pieces\n", min_screw_quantity);
+        printf("Max Quantity: %d pieces\n", max_screw_quantity);
+        printf("Average Length: %.2f mm\n", (float)total_length / list->screw_count);
+        printf("Average Diameter: %.2f mm\n", (float)total_diameter / list->screw_count);
+    }
+    
+    // Nut statistics
+    if (list->nut_count > 0) {
+        int total_nut_quantity = 0;
+        int min_nut_quantity = list->nuts[0].quantity;
+        int max_nut_quantity = list->nuts[0].quantity;
+        int total_diameter = 0;
+        int total_thickness = 0;
+        
+        for (int i = 0; i < list->nut_count; i++) {
+            total_nut_quantity += list->nuts[i].quantity;
+            total_diameter += list->nuts[i].diameter;
+            total_thickness += list->nuts[i].thickness;
+            
+            if (list->nuts[i].quantity < min_nut_quantity)
+                min_nut_quantity = list->nuts[i].quantity;
+            if (list->nuts[i].quantity > max_nut_quantity)
+                max_nut_quantity = list->nuts[i].quantity;
+        }
+        
+        printf("\n--- Nut Statistics ---\n");
+        printf("Total Nut Quantity: %d pieces\n", total_nut_quantity);
+        printf("Average Quantity per Type: %.2f pieces\n", (float)total_nut_quantity / list->nut_count);
+        printf("Min Quantity: %d pieces\n", min_nut_quantity);
+        printf("Max Quantity: %d pieces\n", max_nut_quantity);
+        printf("Average Diameter: %.2f mm\n", (float)total_diameter / list->nut_count);
+        printf("Average Thickness: %.2f mm\n", (float)total_thickness / list->nut_count);
+    }
+    
+    // Low stock alert
+    printf("\n--- Low Stock Alert (Quantity < 10) ---\n");
+    int low_stock_count = 0;
+    
+    for (int i = 0; i < list->screw_count; i++) {
+        if (list->screws[i].quantity < 10) {
+            printf("⚠️ Screw ID %d: Only %d pieces left (Shelf: %s)\n", 
+                   list->screws[i].ID, list->screws[i].quantity,
+                   list->screws[i].shelf_position ? list->screws[i].shelf_position : "N/A");
+            low_stock_count++;
+        }
+    }
+    
+    for (int i = 0; i < list->nut_count; i++) {
+        if (list->nuts[i].quantity < 10) {
+            printf("⚠️ Nut ID %d: Only %d pieces left (Shelf: %s)\n", 
+                   list->nuts[i].ID, list->nuts[i].quantity,
+                   list->nuts[i].shelf_position ? list->nuts[i].shelf_position : "N/A");
+            low_stock_count++;
+        }
+    }
+    
+    if (low_stock_count == 0) {
+        printf("✅ All items have adequate stock levels!\n");
+    }
+    
+    printf("\n=== END OF STATISTICS ===\n");
+}
+
 void displayFoundScrews(Screw_nuts *list, int *found_indices, int found_count) {
     printf("\n=======================================\n");
     printf("         FOUND SCREWS (%d items)\n", found_count);
@@ -546,6 +640,8 @@ void displayFoundScrews(Screw_nuts *list, int *found_indices, int found_count) {
         printf("Material:     %s\n", list->screws[index].material ? list->screws[index].material : "N/A");
         printf("Tip Type:     %s\n", list->screws[index].tip_type ? list->screws[index].tip_type : "N/A");
         printf("Tolerance:    %s\n", list->screws[index].tollerance ? list->screws[index].tollerance : "N/A");
+        printf("Shelf Pos:    %s\n", list->screws[index].shelf_position ? list->screws[index].shelf_position : "N/A");
+        printf("Quantity:     %d\n", list->screws[index].quantity);
     }
     printf("\n=======================================\n");
 }
@@ -564,6 +660,8 @@ void displayFoundNuts(Screw_nuts *list, int *found_indices, int found_count) {
         printf("Material:     %s\n", list->nuts[index].material ? list->nuts[index].material : "N/A");
         printf("Shape:        %s\n", list->nuts[index].shape ? list->nuts[index].shape : "N/A");
         printf("Strength:     %s\n", list->nuts[index].strenght ? list->nuts[index].strenght : "N/A");
+        printf("Shelf Pos:    %s\n", list->nuts[index].shelf_position ? list->nuts[index].shelf_position : "N/A");
+        printf("Quantity:     %d\n", list->nuts[index].quantity);
     }
     printf("\n=====================================\n");
 }
