@@ -666,6 +666,108 @@ void displayFoundNuts(Screw_nuts *list, int *found_indices, int found_count) {
     printf("\n=====================================\n");
 }
 
+void advancedSearchScrews(Screw_nuts *list) {
+    if (list->screw_count == 0) {
+        printf("\n❌ No screws in inventory to search.\n");
+        return;
+    }
+
+    printf("\n=== ADVANCED SEARCH SCREWS ===\n");
+    printf("Enter criteria (leave material blank to ignore):\n");
+
+    int min_length, max_length, min_diameter, max_diameter, min_quantity, max_quantity;
+    char material[256] = "";
+    char shelf_position[256] = "";
+    
+    printf("Min Length (mm): ");
+    scanf("%d", &min_length);
+    printf("Max Length (mm): ");
+    scanf("%d", &max_length);
+    printf("Min Diameter (mm): ");
+    scanf("%d", &min_diameter);
+    printf("Max Diameter (mm): ");
+    scanf("%d", &max_diameter);
+    printf("Min Quantity: ");
+    scanf("%d", &min_quantity);
+    printf("Max Quantity: ");
+    scanf("%d", &max_quantity);
+    getchar(); // Clear buffer
+    printf("Material (or press Enter to skip): ");
+    scanf("%255[^\n]", material);
+    printf("Shelf Position (or press Enter to skip): ");
+    scanf("%255[^\n]", shelf_position);
+
+    int found_indices[1000];
+    int found_count = 0;
+
+    for (int i = 0; i < list->screw_count; i++) {
+        if (list->screws[i].lenght >= min_length && list->screws[i].lenght <= max_length &&
+            list->screws[i].diameter >= min_diameter && list->screws[i].diameter <= max_diameter &&
+            list->screws[i].quantity >= min_quantity && list->screws[i].quantity <= max_quantity &&
+            (strlen(material) == 0 || (list->screws[i].material && strstr(list->screws[i].material, material))) &&
+            (strlen(shelf_position) == 0 || (list->screws[i].shelf_position && strstr(list->screws[i].shelf_position, shelf_position)))) {
+            found_indices[found_count++] = i;
+        }
+    }
+
+    if (found_count == 0) {
+        printf("\n❌ No screws found matching your criteria.\n");
+    } else {
+        displayFoundScrews(list, found_indices, found_count);
+    }
+}
+
+void advancedSearchNuts(Screw_nuts *list) {
+    if (list->nut_count == 0) {
+        printf("\n❌ No nuts in inventory to search.\n");
+        return;
+    }
+
+    printf("\n=== ADVANCED SEARCH NUTS ===\n");
+    printf("Enter criteria (leave material blank to ignore):\n");
+
+    int min_diameter, max_diameter, min_thickness, max_thickness, min_quantity, max_quantity;
+    char material[256] = "";
+    char shelf_position[256] = "";
+    
+    printf("Min Diameter (mm): ");
+    scanf("%d", &min_diameter);
+    printf("Max Diameter (mm): ");
+    scanf("%d", &max_diameter);
+    printf("Min Thickness (mm): ");
+    scanf("%d", &min_thickness);
+    printf("Max Thickness (mm): ");
+    scanf("%d", &max_thickness);
+    printf("Min Quantity: ");
+    scanf("%d", &min_quantity);
+    printf("Max Quantity: ");
+    scanf("%d", &max_quantity);
+    getchar(); // Clear buffer
+    printf("Material (or press Enter to skip): ");
+    scanf("%255[^\n]", material);
+    printf("Shelf Position (or press Enter to skip): ");
+    scanf("%255[^\n]", shelf_position);
+
+    int found_indices[1000];
+    int found_count = 0;
+
+    for (int i = 0; i < list->nut_count; i++) {
+        if (list->nuts[i].diameter >= min_diameter && list->nuts[i].diameter <= max_diameter &&
+            list->nuts[i].thickness >= min_thickness && list->nuts[i].thickness <= max_thickness &&
+            list->nuts[i].quantity >= min_quantity && list->nuts[i].quantity <= max_quantity &&
+            (strlen(material) == 0 || (list->nuts[i].material && strstr(list->nuts[i].material, material))) &&
+            (strlen(shelf_position) == 0 || (list->nuts[i].shelf_position && strstr(list->nuts[i].shelf_position, shelf_position)))) {
+            found_indices[found_count++] = i;
+        }
+    }
+
+    if (found_count == 0) {
+        printf("\n❌ No nuts found matching your criteria.\n");
+    } else {
+        displayFoundNuts(list, found_indices, found_count);
+    }
+}
+
 void searchScrews(Screw_nuts *list) {
     if(list->screw_count == 0) {
         printf("\n❌ No screws in inventory to search.\n");
@@ -1306,6 +1408,9 @@ int main(void) {
         printf("7. Search Nuts\n");
         printf("8. Remove Screw\n");
         printf("9. Remove Nut\n");
+        printf("10. Statistics & Reports\n");
+        printf("11. Advanced Search Screws\n");
+        printf("12. Advanced Search Nuts\n");
         printf("0. Exit\n");
         printf("Enter choice: ");
         scanf("%d", &choice);
