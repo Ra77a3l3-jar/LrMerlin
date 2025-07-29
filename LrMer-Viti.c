@@ -11,7 +11,7 @@ typedef struct {
     char *material;
     char *tip_type;
     char *tollerance;
-} screw;
+} Screw;
 
 typedef struct {
     char *thread_type;
@@ -20,11 +20,11 @@ typedef struct {
     char *material;
     char *shape;
     char *strenght;
-} nut;
+} Nut;
 
 typedef struct {
-    screw *screws;
-    nut *nuts;
+    Screw *screws;
+    Nut *nuts;
     int screw_count;
     int nut_count;
     int screw_capacity;
@@ -34,8 +34,8 @@ typedef struct {
 /* =========== FUNCTION DECLARATON ========== */
 
 Screw_nuts* initStruct(int nut_cout, int screw_cout);
-void addScrews(Screw_nuts* list);
-void addNuts(Screw_nuts* list);
+void addScrews(Screw_nuts *list);
+void addNuts(Screw_nuts *list);
 
 /* ========== FUNCTION IMPLEMENTATION ============ */
 
@@ -50,6 +50,42 @@ Screw_nuts* initStruct(int nut_cout, int screw_cout) {
     list->nut_count = 0;
     list->screw_count = 0;
     return list;
+}
+
+void addScrews(Screw_nuts *list) {
+    if(list->screw_count >= list->screw_capacity) {
+        int new_capacity = 0;
+        printf("The array is full add more space: ");
+        scanf("%d", &new_capacity);
+        printf("\n");
+        new_capacity += list->screw_capacity;
+
+        Screw *newScrew = realloc(list->screws, sizeof(Screw) * new_capacity);
+        if(newScrew == NULL) {
+            printf("Memory allocation failed\n");
+        }
+
+        list->screws = newScrew;
+        list->screw_capacity = new_capacity;
+    }
+}
+
+void addNuts(Screw_nuts *list) {
+    if(list->nut_count >= list->nut_capacity) {
+        int new_capacity = 0;
+        printf("Array full add more space: ");
+        scanf("%d", &new_capacity);
+        printf("\n");
+        new_capacity += list->nut_capacity;
+
+        Nut *newNut = realloc(list->nuts, sizeof(Nut) * new_capacity);
+        if(newNut == NULL) {
+            printf("Memory allocation failed\n");
+        }
+
+        list->nuts = newNut;
+        list->nut_capacity = new_capacity;
+    }
 }
 
 
