@@ -51,6 +51,9 @@ void removeScrews(Screw_nuts *list);
 void removeNuts(Screw_nuts *list);
 void displayFoundScrews(Screw_nuts *list, int *found_indices, int found_count);
 void displayFoundNuts(Screw_nuts *list, int *found_indices, int found_count);
+void showStatistics(Screw_nuts *list);
+void advancedSearchScrews(Screw_nuts *list);
+void advancedSearchNuts(Screw_nuts *list);
 
 /* ========== FUNCTION IMPLEMENTATION ============ */
 
