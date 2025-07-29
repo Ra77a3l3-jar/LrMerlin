@@ -12,6 +12,8 @@ typedef struct {
     char *material;
     char *tip_type;
     char *tollerance;
+    char *shelf_position;
+    int quantity;
 } Screw;
 
 typedef struct {
@@ -22,6 +24,8 @@ typedef struct {
     char *material;
     char *shape;
     char *strenght;
+    char *shelf_position;
+    int quantity;
 } Nut;
 
 typedef struct {
@@ -1138,5 +1142,55 @@ int main(void) {
 
     list = initStruct(init_nut_cap, init_screw_cap);
     
-    return 0;
+    int choice;
+
+    while (1) {
+        printf("\n=== SCREW AND NUT INVENTORY MANAGEMENT ===\n");
+        printf("1. Add Screw\n");
+        printf("2. Add Nut\n");
+        printf("3. Display Inventory\n");
+        printf("4. Save to File\n");
+        printf("5. Load from File\n");
+        printf("6. Search Screws\n");
+        printf("7. Search Nuts\n");
+        printf("8. Remove Screw\n");
+        printf("9. Remove Nut\n");
+        printf("0. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+        switch (choice) {
+        case 1:
+            addScrews(list);
+            break;
+        case 2:
+            addNuts(list);
+            break;
+        case 3:
+            display(list);
+            break;
+        case 4:
+            save_to_file(list, "inventory.txt");
+            break;
+        case 5:
+            load_from_file(list, "inventory.txt");
+            break;
+        case 6:
+            searchScrews(list);
+            break;
+        case 7:
+            searchNuts(list);
+            break;
+        case 8:
+            removeScrews(list);
+            break;
+        case 9:
+            removeNuts(list);
+            break;
+        case 0:
+            printf("Exiting...\n");
+            return 0;
+        default:
+            printf("Invalid choice, please try again.\n");
+        }
+    }
 }
