@@ -1442,10 +1442,6 @@ void removeNuts(Screw_nuts *list) {
     printf("\n✅ Nut with ID %d removed successfully!\n", remove_id);
 }
 
-
-
-
-
 int main(void) {
     int init_nut_cap = 5;
     int init_screw_cap = 5;
