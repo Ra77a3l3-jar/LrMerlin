@@ -165,6 +165,16 @@ void addScrews(Screw_nuts *list) {
     current_screw->tollerance = malloc(strlen(buffer) + 1);
     strcpy(current_screw->tollerance, buffer);
     
+    // Get shelf position
+    printf("Enter shelf position: ");
+    scanf("%255[^\n]", buffer);
+    current_screw->shelf_position = malloc(strlen(buffer) + 1);
+    strcpy(current_screw->shelf_position, buffer);
+    
+    // Get quantity
+    printf("Enter quantity: ");
+    scanf("%d", &current_screw->quantity);
+    
     list->screw_count++;
     printf("\n✅ Screw added successfully!\n");
 }
@@ -234,6 +244,16 @@ void addNuts(Screw_nuts *list) {
     current_nut->strenght = malloc(strlen(buffer) + 1);
     strcpy(current_nut->strenght, buffer);
     
+    // Get shelf position
+    printf("Enter shelf position: ");
+    scanf("%255[^\n]", buffer);
+    current_nut->shelf_position = malloc(strlen(buffer) + 1);
+    strcpy(current_nut->shelf_position, buffer);
+    
+    // Get quantity
+    printf("Enter quantity: ");
+    scanf("%d", &current_nut->quantity);
+    
     list->nut_count++;
     printf("\n✅ Nut added successfully!\n");
 }
@@ -257,6 +277,8 @@ void display(Screw_nuts *list) {
             printf("Material:     %s\n", list->screws[i].material ? list->screws[i].material : "N/A");
             printf("Tip Type:     %s\n", list->screws[i].tip_type ? list->screws[i].tip_type : "N/A");
             printf("Tolerance:    %s\n", list->screws[i].tollerance ? list->screws[i].tollerance : "N/A");
+            printf("Shelf Pos:    %s\n", list->screws[i].shelf_position ? list->screws[i].shelf_position : "N/A");
+            printf("Quantity:     %d\n", list->screws[i].quantity);
         }
     }
     
@@ -276,6 +298,8 @@ void display(Screw_nuts *list) {
             printf("Material:     %s\n", list->nuts[i].material ? list->nuts[i].material : "N/A");
             printf("Shape:        %s\n", list->nuts[i].shape ? list->nuts[i].shape : "N/A");
             printf("Strength:     %s\n", list->nuts[i].strenght ? list->nuts[i].strenght : "N/A");
+            printf("Shelf Pos:    %s\n", list->nuts[i].shelf_position ? list->nuts[i].shelf_position : "N/A");
+            printf("Quantity:     %d\n", list->nuts[i].quantity);
         }
     }
     
