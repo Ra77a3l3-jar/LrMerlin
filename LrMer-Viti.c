@@ -325,7 +325,7 @@ void save_to_file(const Screw_nuts *list, const char *filename) {
     
     // Save screws
     for (int i = 0; i < list->screw_count; ++i) {
-        fprintf(file, "%d|%s|%s|%s|%d|%d|%s|%s|%s\n", 
+        fprintf(file, "%d|%s|%s|%s|%d|%d|%s|%s|%s|%s|%d\n", 
             list->screws[i].ID,
             list->screws[i].head_type ? list->screws[i].head_type : "N/A",
             list->screws[i].drive_type ? list->screws[i].drive_type : "N/A",
@@ -334,7 +334,9 @@ void save_to_file(const Screw_nuts *list, const char *filename) {
             list->screws[i].diameter,
             list->screws[i].material ? list->screws[i].material : "N/A",
             list->screws[i].tip_type ? list->screws[i].tip_type : "N/A",
-            list->screws[i].tollerance ? list->screws[i].tollerance : "N/A");
+            list->screws[i].tollerance ? list->screws[i].tollerance : "N/A",
+            list->screws[i].shelf_position ? list->screws[i].shelf_position : "N/A",
+            list->screws[i].quantity);
     }
     
     // Write nuts header
@@ -342,14 +344,16 @@ void save_to_file(const Screw_nuts *list, const char *filename) {
     
     // Save nuts
     for (int i = 0; i < list->nut_count; ++i) {
-        fprintf(file, "%d|%s|%d|%d|%s|%s|%s\n", 
+        fprintf(file, "%d|%s|%d|%d|%s|%s|%s|%s|%d\n", 
             list->nuts[i].ID,
             list->nuts[i].thread_type ? list->nuts[i].thread_type : "N/A",
             list->nuts[i].diameter,
             list->nuts[i].thickness,
             list->nuts[i].material ? list->nuts[i].material : "N/A",
             list->nuts[i].shape ? list->nuts[i].shape : "N/A",
-            list->nuts[i].strenght ? list->nuts[i].strenght : "N/A");
+            list->nuts[i].strenght ? list->nuts[i].strenght : "N/A",
+            list->nuts[i].shelf_position ? list->nuts[i].shelf_position : "N/A",
+            list->nuts[i].quantity);
     }
 
     fclose(file);
@@ -427,15 +431,26 @@ void load_from_file(Screw_nuts *list, const char *filename) {
                     }
                     
                     token = strtok(NULL, "|");
+                    if (token && strcmp(token, "N/A") != 0) {
+                        list->screws[i].tollerance = malloc(strlen(token) + 1);
+                        strcpy(list->screws[i].tollerance, token);
+                    } else {
+                        list->screws[i].tollerance = NULL;
+                    }
+                    
+                    token = strtok(NULL, "|");
+                    if (token && strcmp(token, "N/A") != 0) {
+                        list->screws[i].shelf_position = malloc(strlen(token) + 1);
+                        strcpy(list->screws[i].shelf_position, token);
+                    } else {
+                        list->screws[i].shelf_position = NULL;
+                    }
+                    
+                    token = strtok(NULL, "|");
                     if (token) {
-                        // Remove newline character
+                        // Remove newline character for quantity
                         token[strcspn(token, "\n")] = 0;
-                        if (strcmp(token, "N/A") != 0) {
-                            list->screws[i].tollerance = malloc(strlen(token) + 1);
-                            strcpy(list->screws[i].tollerance, token);
-                        } else {
-                            list->screws[i].tollerance = NULL;
-                        }
+                        list->screws[i].quantity = atoi(token);
                     }
                     
                     list->screw_count++;
@@ -483,15 +498,26 @@ void load_from_file(Screw_nuts *list, const char *filename) {
                     }
                     
                     token = strtok(NULL, "|");
+                    if (token && strcmp(token, "N/A") != 0) {
+                        list->nuts[i].strenght = malloc(strlen(token) + 1);
+                        strcpy(list->nuts[i].strenght, token);
+                    } else {
+                        list->nuts[i].strenght = NULL;
+                    }
+                    
+                    token = strtok(NULL, "|");
+                    if (token && strcmp(token, "N/A") != 0) {
+                        list->nuts[i].shelf_position = malloc(strlen(token) + 1);
+                        strcpy(list->nuts[i].shelf_position, token);
+                    } else {
+                        list->nuts[i].shelf_position = NULL;
+                    }
+                    
+                    token = strtok(NULL, "|");
                     if (token) {
-                        // Remove newline character
+                        // Remove newline character for quantity
                         token[strcspn(token, "\n")] = 0;
-                        if (strcmp(token, "N/A") != 0) {
-                            list->nuts[i].strenght = malloc(strlen(token) + 1);
-                            strcpy(list->nuts[i].strenght, token);
-                        } else {
-                            list->nuts[i].strenght = NULL;
-                        }
+                        list->nuts[i].quantity = atoi(token);
                     }
                     
                     list->nut_count++;
