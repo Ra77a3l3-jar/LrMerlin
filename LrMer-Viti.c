@@ -36,6 +36,9 @@ typedef struct {
 Screw_nuts* initStruct(int nut_cout, int screw_cout);
 void addScrews(Screw_nuts *list);
 void addNuts(Screw_nuts *list);
+void display(Screw_nuts *list);
+void save_to_file(const Screw_nuts *list, const char *filename);
+void load_from_file(Screw_nuts *list, const char *filename);
 
 /* ========== FUNCTION IMPLEMENTATION ============ */
 
@@ -86,6 +89,56 @@ void addNuts(Screw_nuts *list) {
         list->nuts = newNut;
         list->nut_capacity = new_capacity;
     }
+}
+
+void display(Screw_nuts *list) {
+    // Display all screws
+    printf("\n===============================\n");
+    printf("         SCREWS INVENTORY\n");
+    printf("===============================\n");
+    
+    if(list->screw_count == 0) {
+        printf("No screws in inventory.\n");
+    } else {
+        for(int i = 0; i < list->screw_count; i++) {
+            printf("\n--- Screw #%d ---\n", i + 1);
+            printf("Head Type:    %s\n", list->screws[i].head_type ? list->screws[i].head_type : "N/A");
+            printf("Drive Type:   %s\n", list->screws[i].drive_type ? list->screws[i].drive_type : "N/A");
+            printf("Thread Type:  %s\n", list->screws[i].tread_type ? list->screws[i].tread_type : "N/A");
+            printf("Length:       %d mm\n", list->screws[i].lenght);
+            printf("Diameter:     %d mm\n", list->screws[i].diameter);
+            printf("Material:     %s\n", list->screws[i].material ? list->screws[i].material : "N/A");
+            printf("Tip Type:     %s\n", list->screws[i].tip_type ? list->screws[i].tip_type : "N/A");
+            printf("Tolerance:    %s\n", list->screws[i].tollerance ? list->screws[i].tollerance : "N/A");
+        }
+    }
+    
+    // Display all nuts
+    printf("\n===============================\n");
+    printf("          NUTS INVENTORY\n");
+    printf("===============================\n");
+    
+    if(list->nut_count == 0) {
+        printf("No nuts in inventory.\n");
+    } else {
+        for(int i = 0; i < list->nut_count; i++) {
+            printf("\n--- Nut #%d ---\n", i + 1);
+            printf("Thread Type:  %s\n", list->nuts[i].thread_type ? list->nuts[i].thread_type : "N/A");
+            printf("Diameter:     %d mm\n", list->nuts[i].diameter);
+            printf("Thickness:    %d mm\n", list->nuts[i].thickness);
+            printf("Material:     %s\n", list->nuts[i].material ? list->nuts[i].material : "N/A");
+            printf("Shape:        %s\n", list->nuts[i].shape ? list->nuts[i].shape : "N/A");
+            printf("Strength:     %s\n", list->nuts[i].strenght ? list->nuts[i].strenght : "N/A");
+        }
+    }
+    
+    // Display summary
+    printf("\n===============================\n");
+    printf("           SUMMARY\n");
+    printf("===============================\n");
+    printf("Total Screws: %d/%d\n", list->screw_count, list->screw_capacity);
+    printf("Total Nuts:   %d/%d\n", list->nut_count, list->nut_capacity);
+    printf("===============================\n");
 }
 
 
