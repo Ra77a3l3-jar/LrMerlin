@@ -11,6 +11,7 @@ typedef struct {
     int diameter;
     char *material;
     char *tip_type;
+    
     char *tollerance;
     char *shelf_position;
     int quantity;
@@ -113,26 +114,31 @@ void addScrews(Screw_nuts *list) {
     Screw *current_screw = &list->screws[list->screw_count];
     
     printf("\n=== Adding New Screw ===\n");
-    
     // Set ID
     current_screw->ID = list->screw_count + 1;
     printf("Screw ID: %d\n", current_screw->ID);
     
+    // Clear buffer after menu choice
+    getchar();
+    
     // Get head type
     printf("Enter head type: ");
-    scanf("%255[^\n]", buffer);
+    scanf(" %255[^\n]", buffer);
+    printf("\n");
     current_screw->head_type = malloc(strlen(buffer) + 1);
     strcpy(current_screw->head_type, buffer);
     
     // Get drive type
     printf("Enter drive type: ");
-    scanf("%255[^\n]", buffer);
+    scanf(" %255[^\n]", buffer);
+    printf("\n");
     current_screw->drive_type = malloc(strlen(buffer) + 1);
     strcpy(current_screw->drive_type, buffer);
     
     // Get thread type
     printf("Enter thread type: ");
-    scanf("%255[^\n]", buffer);
+    scanf(" %255[^\n]", buffer);
+    printf("\n");
     current_screw->tread_type = malloc(strlen(buffer) + 1);
     strcpy(current_screw->tread_type, buffer);
     
@@ -144,36 +150,42 @@ void addScrews(Screw_nuts *list) {
     printf("Enter diameter (mm): ");
     scanf("%d", &current_screw->diameter);
     
+    
     // Clear buffer
     getchar();
     
     // Get material
     printf("Enter material: ");
-    scanf("%255[^\n]", buffer);
+    scanf(" %255[^\n]", buffer);
+    printf("\n");
     current_screw->material = malloc(strlen(buffer) + 1);
     strcpy(current_screw->material, buffer);
     
     // Get tip type
     printf("Enter tip type: ");
-    scanf("%255[^\n]", buffer);
+    scanf(" %255[^\n]", buffer);
+    printf("\n");
     current_screw->tip_type = malloc(strlen(buffer) + 1);
     strcpy(current_screw->tip_type, buffer);
     
     // Get tolerance
     printf("Enter tolerance: ");
-    scanf("%255[^\n]", buffer);
+    scanf(" %255[^\n]", buffer);
+    printf("\n");
     current_screw->tollerance = malloc(strlen(buffer) + 1);
     strcpy(current_screw->tollerance, buffer);
     
     // Get shelf position
     printf("Enter shelf position: ");
-    scanf("%255[^\n]", buffer);
+    scanf(" %255[^\n]", buffer);
+    printf("\n");
     current_screw->shelf_position = malloc(strlen(buffer) + 1);
     strcpy(current_screw->shelf_position, buffer);
     
     // Get quantity
     printf("Enter quantity: ");
     scanf("%d", &current_screw->quantity);
+    printf("\n");
     
     list->screw_count++;
     printf("\n✅ Screw added successfully!\n");
@@ -209,50 +221,61 @@ void addNuts(Screw_nuts *list) {
     current_nut->ID = list->nut_count + 1;
     printf("Nut ID: %d\n", current_nut->ID);
     
+    // Clear buffer after menu choice
+    getchar();
+    
     // Get thread type
     printf("Enter thread type: ");
-    scanf("%255[^\n]", buffer);
+    scanf(" %255[^\n]", buffer);
+    printf("\n");
     current_nut->thread_type = malloc(strlen(buffer) + 1);
     strcpy(current_nut->thread_type, buffer);
     
     // Get diameter
     printf("Enter diameter (mm): ");
     scanf("%d", &current_nut->diameter);
+    printf("\n");
     
     // Get thickness
     printf("Enter thickness (mm): ");
     scanf("%d", &current_nut->thickness);
+    printf("\n");
     
     // Clear buffer
     getchar();
     
     // Get material
     printf("Enter material: ");
-    scanf("%255[^\n]", buffer);
+    scanf(" %255[^\n]", buffer);
+    printf("\n");
     current_nut->material = malloc(strlen(buffer) + 1);
     strcpy(current_nut->material, buffer);
     
     // Get shape
     printf("Enter shape: ");
-    scanf("%255[^\n]", buffer);
+    scanf(" %255[^\n]", buffer);
+    printf("\n");
     current_nut->shape = malloc(strlen(buffer) + 1);
     strcpy(current_nut->shape, buffer);
     
     // Get strength
     printf("Enter strength: ");
-    scanf("%255[^\n]", buffer);
+    scanf(" %255[^\n]", buffer);
+    printf("\n");
     current_nut->strenght = malloc(strlen(buffer) + 1);
     strcpy(current_nut->strenght, buffer);
     
     // Get shelf position
     printf("Enter shelf position: ");
-    scanf("%255[^\n]", buffer);
+    scanf(" %255[^\n]", buffer);
+    printf("\n");
     current_nut->shelf_position = malloc(strlen(buffer) + 1);
     strcpy(current_nut->shelf_position, buffer);
     
     // Get quantity
     printf("Enter quantity: ");
     scanf("%d", &current_nut->quantity);
+    printf("\n");
     
     list->nut_count++;
     printf("\n✅ Nut added successfully!\n");
@@ -693,9 +716,11 @@ void advancedSearchScrews(Screw_nuts *list) {
     scanf("%d", &max_quantity);
     getchar(); // Clear buffer
     printf("Material (or press Enter to skip): ");
-    scanf("%255[^\n]", material);
+    scanf(" %255[^\n]", material);
+    printf("\n");
     printf("Shelf Position (or press Enter to skip): ");
-    scanf("%255[^\n]", shelf_position);
+    scanf(" %255[^\n]", shelf_position);
+    printf("\n");
 
     int found_indices[1000];
     int found_count = 0;
@@ -744,9 +769,11 @@ void advancedSearchNuts(Screw_nuts *list) {
     scanf("%d", &max_quantity);
     getchar(); // Clear buffer
     printf("Material (or press Enter to skip): ");
-    scanf("%255[^\n]", material);
+    scanf(" %255[^\n]", material);
+    printf("\n");
     printf("Shelf Position (or press Enter to skip): ");
-    scanf("%255[^\n]", shelf_position);
+    scanf(" %255[^\n]", shelf_position);
+    printf("\n");
 
     int found_indices[1000];
     int found_count = 0;
@@ -810,7 +837,8 @@ void searchScrews(Screw_nuts *list) {
             
         case 2: // Search by Head Type
             printf("Enter head type to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->screw_count; i++) {
                 if(list->screws[i].head_type && strstr(list->screws[i].head_type, search_str)) {
                     found_indices[found_count++] = i;
@@ -820,7 +848,8 @@ void searchScrews(Screw_nuts *list) {
             
         case 3: // Search by Drive Type
             printf("Enter drive type to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->screw_count; i++) {
                 if(list->screws[i].drive_type && strstr(list->screws[i].drive_type, search_str)) {
                     found_indices[found_count++] = i;
@@ -830,7 +859,8 @@ void searchScrews(Screw_nuts *list) {
             
         case 4: // Search by Thread Type
             printf("Enter thread type to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->screw_count; i++) {
                 if(list->screws[i].tread_type && strstr(list->screws[i].tread_type, search_str)) {
                     found_indices[found_count++] = i;
@@ -841,6 +871,7 @@ void searchScrews(Screw_nuts *list) {
         case 5: // Search by Length
             printf("Enter length to search (mm): ");
             scanf("%d", &search_int);
+            printf("\n");
             for(int i = 0; i < list->screw_count; i++) {
                 if(list->screws[i].lenght == search_int) {
                     found_indices[found_count++] = i;
@@ -851,6 +882,7 @@ void searchScrews(Screw_nuts *list) {
         case 6: // Search by Diameter
             printf("Enter diameter to search (mm): ");
             scanf("%d", &search_int);
+            printf("\n");
             for(int i = 0; i < list->screw_count; i++) {
                 if(list->screws[i].diameter == search_int) {
                     found_indices[found_count++] = i;
@@ -860,7 +892,8 @@ void searchScrews(Screw_nuts *list) {
             
         case 7: // Search by Material
             printf("Enter material to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->screw_count; i++) {
                 if(list->screws[i].material && strstr(list->screws[i].material, search_str)) {
                     found_indices[found_count++] = i;
@@ -870,7 +903,8 @@ void searchScrews(Screw_nuts *list) {
             
         case 8: // Search by Tip Type
             printf("Enter tip type to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->screw_count; i++) {
                 if(list->screws[i].tip_type && strstr(list->screws[i].tip_type, search_str)) {
                     found_indices[found_count++] = i;
@@ -880,7 +914,8 @@ void searchScrews(Screw_nuts *list) {
             
         case 9: // Search by Tolerance
             printf("Enter tolerance to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->screw_count; i++) {
                 if(list->screws[i].tollerance && strstr(list->screws[i].tollerance, search_str)) {
                     found_indices[found_count++] = i;
@@ -937,6 +972,7 @@ void searchNuts(Screw_nuts *list) {
         case 1: // Search by ID
             printf("Enter ID to search: ");
             scanf("%d", &search_int);
+            printf("\n");
             for(int i = 0; i < list->nut_count; i++) {
                 if(list->nuts[i].ID == search_int) {
                     found_indices[found_count++] = i;
@@ -946,7 +982,8 @@ void searchNuts(Screw_nuts *list) {
             
         case 2: // Search by Thread Type
             printf("Enter thread type to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->nut_count; i++) {
                 if(list->nuts[i].thread_type && strstr(list->nuts[i].thread_type, search_str)) {
                     found_indices[found_count++] = i;
@@ -957,6 +994,7 @@ void searchNuts(Screw_nuts *list) {
         case 3: // Search by Diameter
             printf("Enter diameter to search (mm): ");
             scanf("%d", &search_int);
+            printf("\n");
             for(int i = 0; i < list->nut_count; i++) {
                 if(list->nuts[i].diameter == search_int) {
                     found_indices[found_count++] = i;
@@ -967,6 +1005,7 @@ void searchNuts(Screw_nuts *list) {
         case 4: // Search by Thickness
             printf("Enter thickness to search (mm): ");
             scanf("%d", &search_int);
+            printf("\n");
             for(int i = 0; i < list->nut_count; i++) {
                 if(list->nuts[i].thickness == search_int) {
                     found_indices[found_count++] = i;
@@ -976,7 +1015,8 @@ void searchNuts(Screw_nuts *list) {
             
         case 5: // Search by Material
             printf("Enter material to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->nut_count; i++) {
                 if(list->nuts[i].material && strstr(list->nuts[i].material, search_str)) {
                     found_indices[found_count++] = i;
@@ -986,7 +1026,8 @@ void searchNuts(Screw_nuts *list) {
             
         case 6: // Search by Shape
             printf("Enter shape to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->nut_count; i++) {
                 if(list->nuts[i].shape && strstr(list->nuts[i].shape, search_str)) {
                     found_indices[found_count++] = i;
@@ -996,7 +1037,8 @@ void searchNuts(Screw_nuts *list) {
             
         case 7: // Search by Strength
             printf("Enter strength to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->nut_count; i++) {
                 if(list->nuts[i].strenght && strstr(list->nuts[i].strenght, search_str)) {
                     found_indices[found_count++] = i;
@@ -1056,6 +1098,7 @@ void removeScrews(Screw_nuts *list) {
         case 1: // Search by ID
             printf("Enter ID to search: ");
             scanf("%d", &search_int);
+            printf("\n");
             for(int i = 0; i < list->screw_count; i++) {
                 if(list->screws[i].ID == search_int) {
                     found_indices[found_count++] = i;
@@ -1065,7 +1108,8 @@ void removeScrews(Screw_nuts *list) {
             
         case 2: // Search by Head Type
             printf("Enter head type to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->screw_count; i++) {
                 if(list->screws[i].head_type && strstr(list->screws[i].head_type, search_str)) {
                     found_indices[found_count++] = i;
@@ -1075,7 +1119,8 @@ void removeScrews(Screw_nuts *list) {
             
         case 3: // Search by Drive Type
             printf("Enter drive type to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->screw_count; i++) {
                 if(list->screws[i].drive_type && strstr(list->screws[i].drive_type, search_str)) {
                     found_indices[found_count++] = i;
@@ -1085,7 +1130,8 @@ void removeScrews(Screw_nuts *list) {
             
         case 4: // Search by Thread Type
             printf("Enter thread type to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->screw_count; i++) {
                 if(list->screws[i].tread_type && strstr(list->screws[i].tread_type, search_str)) {
                     found_indices[found_count++] = i;
@@ -1096,6 +1142,7 @@ void removeScrews(Screw_nuts *list) {
         case 5: // Search by Length
             printf("Enter length to search (mm): ");
             scanf("%d", &search_int);
+            printf("\n");
             for(int i = 0; i < list->screw_count; i++) {
                 if(list->screws[i].lenght == search_int) {
                     found_indices[found_count++] = i;
@@ -1106,6 +1153,7 @@ void removeScrews(Screw_nuts *list) {
         case 6: // Search by Diameter
             printf("Enter diameter to search (mm): ");
             scanf("%d", &search_int);
+            printf("\n");
             for(int i = 0; i < list->screw_count; i++) {
                 if(list->screws[i].diameter == search_int) {
                     found_indices[found_count++] = i;
@@ -1115,7 +1163,8 @@ void removeScrews(Screw_nuts *list) {
             
         case 7: // Search by Material
             printf("Enter material to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->screw_count; i++) {
                 if(list->screws[i].material && strstr(list->screws[i].material, search_str)) {
                     found_indices[found_count++] = i;
@@ -1125,7 +1174,8 @@ void removeScrews(Screw_nuts *list) {
             
         case 8: // Search by Tip Type
             printf("Enter tip type to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->screw_count; i++) {
                 if(list->screws[i].tip_type && strstr(list->screws[i].tip_type, search_str)) {
                     found_indices[found_count++] = i;
@@ -1135,7 +1185,8 @@ void removeScrews(Screw_nuts *list) {
             
         case 9: // Search by Tolerance
             printf("Enter tolerance to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->screw_count; i++) {
                 if(list->screws[i].tollerance && strstr(list->screws[i].tollerance, search_str)) {
                     found_indices[found_count++] = i;
@@ -1247,6 +1298,7 @@ void removeNuts(Screw_nuts *list) {
         case 1: // Search by ID
             printf("Enter ID to search: ");
             scanf("%d", &search_int);
+            printf("\n");
             for(int i = 0; i < list->nut_count; i++) {
                 if(list->nuts[i].ID == search_int) {
                     found_indices[found_count++] = i;
@@ -1256,7 +1308,8 @@ void removeNuts(Screw_nuts *list) {
             
         case 2: // Search by Thread Type
             printf("Enter thread type to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->nut_count; i++) {
                 if(list->nuts[i].thread_type && strstr(list->nuts[i].thread_type, search_str)) {
                     found_indices[found_count++] = i;
@@ -1267,6 +1320,7 @@ void removeNuts(Screw_nuts *list) {
         case 3: // Search by Diameter
             printf("Enter diameter to search (mm): ");
             scanf("%d", &search_int);
+            printf("\n");
             for(int i = 0; i < list->nut_count; i++) {
                 if(list->nuts[i].diameter == search_int) {
                     found_indices[found_count++] = i;
@@ -1277,6 +1331,7 @@ void removeNuts(Screw_nuts *list) {
         case 4: // Search by Thickness
             printf("Enter thickness to search (mm): ");
             scanf("%d", &search_int);
+            printf("\n");
             for(int i = 0; i < list->nut_count; i++) {
                 if(list->nuts[i].thickness == search_int) {
                     found_indices[found_count++] = i;
@@ -1286,7 +1341,8 @@ void removeNuts(Screw_nuts *list) {
             
         case 5: // Search by Material
             printf("Enter material to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->nut_count; i++) {
                 if(list->nuts[i].material && strstr(list->nuts[i].material, search_str)) {
                     found_indices[found_count++] = i;
@@ -1296,7 +1352,8 @@ void removeNuts(Screw_nuts *list) {
             
         case 6: // Search by Shape
             printf("Enter shape to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->nut_count; i++) {
                 if(list->nuts[i].shape && strstr(list->nuts[i].shape, search_str)) {
                     found_indices[found_count++] = i;
@@ -1306,7 +1363,8 @@ void removeNuts(Screw_nuts *list) {
             
         case 7: // Search by Strength
             printf("Enter strength to search: ");
-            scanf("%255[^\n]", search_str);
+            scanf(" %255[^\n]", search_str);
+            printf("\n");
             for(int i = 0; i < list->nut_count; i++) {
                 if(list->nuts[i].strenght && strstr(list->nuts[i].strenght, search_str)) {
                     found_indices[found_count++] = i;
